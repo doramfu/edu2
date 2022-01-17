@@ -1,7 +1,6 @@
 package com.edu.control;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,19 +8,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.edu.common.Controller;
 import com.edu.dao.MemberDAO;
-import com.edu.model.MemberVO;
 
-public class MemberListController implements Controller {
+public class MemberDeleteController implements Controller {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 조회된 아이디를 삭제 -> memberDeleteOutput.jsp
+		
+		String id = req.getParameter("id");
 		
 		MemberDAO dao = new MemberDAO();
-		List<MemberVO> list = dao.getMemberList();
+		dao.deleteMember(id);
 		
+		req.getRequestDispatcher("memberResult/memberDeleteOutput.jsp").forward(req, resp);
 		
-		req.setAttribute("memberList", list); //속성추가
-		req.getRequestDispatcher("memberResult/memberListOutput.jsp").forward(req, resp);
 	}
 
 }
